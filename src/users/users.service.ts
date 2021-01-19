@@ -1,9 +1,9 @@
 import { Injectable, UnprocessableEntityException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UserRole } from './user-roles.enum';
-import { User } from './user.entity';
 import { UserRepository } from './users.repository';
+import { CreateUserDto } from './dto/create-user.dto';
+import { User } from './user.entity';
+import { UserRole } from './user-roles.enum';
 
 @Injectable()
 export class UsersService {
@@ -14,9 +14,7 @@ export class UsersService {
 
   async createAdminUser(createUserDto: CreateUserDto): Promise<User> {
     if (createUserDto.password != createUserDto.passwordConfirmation) {
-      throw new UnprocessableEntityException(
-        'Las passwords ingresadas no coinciden',
-      );
+      throw new UnprocessableEntityException('Las contrase;as no coinciden');
     } else {
       return this.userRepository.createUser(createUserDto, UserRole.ADMIN);
     }

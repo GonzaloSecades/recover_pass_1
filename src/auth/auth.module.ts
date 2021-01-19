@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
-import { JwtModule } from '@nestjs/jwt';
-import { PassportModule } from '@nestjs/passport';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserRepository } from 'src/users/users.repository';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { UserRepository } from '../users/users.repository';
+import { JwtModule } from '@nestjs/jwt';
+import { PassportModule } from '@nestjs/passport';
 import { JwtStrategy } from './jwt.strategy';
 
 @Module({
@@ -12,9 +12,9 @@ import { JwtStrategy } from './jwt.strategy';
     TypeOrmModule.forFeature([UserRepository]),
     PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.register({
-      secret: 'super_secret',
+      secret: 'super-secret',
       signOptions: {
-        expiresIn: 2700000,
+        expiresIn: 18000,
       },
     }),
   ],

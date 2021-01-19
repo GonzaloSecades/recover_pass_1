@@ -9,5 +9,5 @@ export const typeOrmConfig: TypeOrmModuleOptions = {
   database: 'medium',
   entities: [__dirname + '/../**/*.entity.{js,ts}'],
   synchronize: true,
-  dropSchema: true,
+  //dropSchema: true,
 };
