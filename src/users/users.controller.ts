@@ -8,6 +8,7 @@ import {
   Param,
   Patch,
   ForbiddenException,
+  Delete,
 } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UsersService } from './users.service';
@@ -58,10 +59,19 @@ export class UsersController {
   ) {
     if (user.role != UserRole.ADMIN && user.id.toString() != id) {
       throw new ForbiddenException(
-        'Ustede no esta autorizado a accer a este recurso',
+        'Usted no esta autorizado a acceder a este recurso',
       );
     } else {
       return this.usersService.updateUser(updateUserDto, id);
     }
+  }
+
+  @Delete(':id')
+  @Role(UserRole.ADMIN)
+  async deleteUser(@Param('id') id: string) {
+    await this.usersService.deleteUser(id);
+    return {
+      message: 'Usuario removido correctamente',
+    };
   }
 }
