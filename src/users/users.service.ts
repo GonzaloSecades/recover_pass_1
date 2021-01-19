@@ -10,6 +10,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { User } from './user.entity';
 import { UserRole } from './user-roles.enum';
 import { UpdateUserDto } from './dto/update-users.dto';
+import { FindUsersQueryDto } from './dto/find-users-query.dto';
 
 @Injectable()
 export class UsersService {
@@ -51,5 +52,20 @@ export class UsersService {
         'Error al guardar los datos en la base ',
       );
     }
+  }
+
+  async deleteUser(userId: string) {
+    const result = await this.userRepository.delete({ id: userId });
+
+    if (result.affected === 0) {
+      throw new NotFoundException('No se encontro usuario con el ID ingresado');
+    }
+  }
+
+  async findUsers(
+    queryDto: FindUsersQueryDto,
+  ): Promise<{ users: User[]; total: number }> {
+    const users = await this.userRepository.findUsers(queryDto);
+    return users;
   }
 }
